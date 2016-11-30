@@ -6,10 +6,10 @@
 <body>
 	<h1>This is a poll-inator</h1>
 
-	<form action="/post_question" method="post">
-		<label for="post_question">POST A QUESTION HERE: </label>
-		<input id="question" type="text" name="post_question" value="{{ current_question }}">
-		<input type="submit" value="Post">		
+	<form action="/main/" method="post">
+	    {% csrf_token %}
+	    {{ form }}
+	    <input type="submit" value="Submit" />
 	</form>
 
 	<div class="popup" onclick="myFunction()">

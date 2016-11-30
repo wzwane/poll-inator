@@ -20,4 +20,5 @@ from polls import views
 urlpatterns = [
 	url(r'^polls/$', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
+    url(r'^main/$', views.mainPage, name='mainPage'),
 ]

@@ -1,3 +1,9 @@
+{% load static %}
+<script src="{% static 'polls/main.js' %}" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+<h1>Welcome to Poll-inator</h1>
+
 {% if question_list %}
 	<ul>
 	{% for question in question_list %}

@@ -76,7 +76,7 @@ def create_post(request):
         post_text = request.POST.get('the_post')
         response_data = {}
 
-        post = Post(text=post_text, author=request.user)
+        post = Question(text=post_text, author=request.user)
         post.save()
 
         response_data['result'] = 'Create post successful!'

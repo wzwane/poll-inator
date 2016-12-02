@@ -6,7 +6,6 @@ $('#post-form').on('submit', function(event){
 
 })
 
-
 function create_post(){
     console.log("You've successfully created a post!")
     $.ajax({

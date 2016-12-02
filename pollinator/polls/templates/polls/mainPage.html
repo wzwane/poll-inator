@@ -2,23 +2,96 @@
 <html>
 <head>
 	<title>Poll-inator</title>
+    <link rel="stylesheet" href="style.css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link href="main.css" rel="stylesheet">
+
+	<meta charset="UTF-8">
 </head>
 <body>
-	<h1>This is a poll-inator</h1>
+	<nav class="navbar navbar-inverse header-nav">
+		<div class="container">
+			<a class="navbar-brand" href="mainPage.html">The Poll-inator</a>
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="nav navbar-nav navbar-right">
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-	<form action="/main/" method="post">
-	    {% csrf_token %}
-	    {{ form }}
-	    <input type="submit" value="Submit" />
+	<form action="/create_post/" method="POST" id="post-form">
+		<div class="container">
+			<div class="content col-sm-offset-3">
+				<div class="questions">
+					<div class="questionForm question">
+						<h4>Post new question below:</h4>
+						<div class="col-lg-8">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Title" id = "questionTitle">
+								<input type="text" class="form-control" placeholder="Description" id = "questionDescription">
+								<span>
+								<p></p>
+
+								<button class="btn btn-default" type="button" id = "askButton" onclick="insertQ()">Post Question</button>
+
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</form>
 
-	<div class="popup" onclick="myFunction()">
-		
-	</div>
 
-	<script type="text/javascript">
-		
-	</script>
 
 </body>
+<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </html>
+
+<script>
+var questionsList = [];
+var questionId = 0;
+var newQuestionTitle = document.getElementById("questionTitle");
+var newQuestionDescription = document.getElementById("questionDescription");
+
+
+function insertQ () {
+    displayQ();
+    clearQ();
+}
+
+function displayQ(){
+	questionId += 1;
+	console.log(questionId)
+  	questionsList.push({id: questionId, title: newQuestionTitle.value, des:newQuestionDescription.value })
+  	$(".questions").append($('<div class="question shadowedBox">')
+  	.append($('<div class="questionInfo">')
+  		.append($('<h3 class="questionTitle">')
+  		.append($("<p>").append(newQuestionTitle.value)))
+  		.append($('<p class="questionContent">').append($("<p>").append(newQuestionDescription.value))))
+  		.append($('<div class="options"><button class="btn btn-primary upvote">^</button><button class="btn btn-primary downvote">V</button><button class="btn btn-primary comment">Comment</button>')
+
+  		));
+  	console.log(questionsList)
+}
+
+
+function clearQ(){
+  	newQuestionTitle.value = "";
+  	newQuestionDescription.value = "";
+}
+
+</script>
+
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>

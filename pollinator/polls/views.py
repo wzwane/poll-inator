@@ -56,12 +56,6 @@ def vote(request, question_id):
 		selected_choice.save()
 		return HttpResponseRedirect(reverse('results', args=(question.id,)))
 
-def mainPage(request):
-	question_list = Question.objects.all()
-	template = loader.get_template('polls/mainPage.html')
-	context = {'question_list': question_list}
-	return HttpResponse(template.render(context, request))
-
 def get_question(request):
 	if request.method == 'POST':
 		form = QuestionForm(request.POST)

@@ -65,26 +65,24 @@ def get_question(request):
 			form = QuestionForm()
 		return render(request, 'main.html', {'form': form})
 
-def create_post(request):
-    if request.method == 'POST':
-        post_text = request.POST.get('the_post')
-        response_data = {}
+def create_question(request):
+	if request.method == 'POST':
+		question_text = request.POST.get("the_question")
+		response_data = {}
 
-        post = Question(text=post_text, author=request.user)
-        post.save()
+		question = Question(question_text=question_text)
+		question.save()
 
-        response_data['result'] = 'Create post successful!'
-        response_data['postpk'] = post.pk
-        response_data['text'] = post.text
-        response_data['created'] = post.created.strftime('%B %d, %Y %I:%M %p')
-        response_data['author'] = post.author.username
+		response_data['result'] = 'Create question successful'
+		response_data['questionpk'] = question.pk
+		response_data['question_text'] = question.question_text
 
-        return HttpResponse(
-            json.dumps(response_data),
-            content_type="application/json"
-        )
-    else:
-        return HttpResponse(
-            json.dumps({"nothing to see": "this isn't happening"}),
-            content_type="application/json"
-        )
+		return HttpResponse(
+			json.dumps(response_data),
+			contet_type="application/json"
+		)
+	else:
+		return HttpResponse(
+			json.dumps({"nothing to see": "this isn't happening"}),
+			content_type="application/jsons"
+		)

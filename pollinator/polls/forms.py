@@ -8,5 +8,5 @@ class QuestionForm(forms.ModelForm):
 		widgets = {
 			'question_text': forms.TextInput(
 				attrs={'id': 'question-text', 'required': True, 'placeholder': 'Ask a question'}
-			)
+			),
 		}

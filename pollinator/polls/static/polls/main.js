@@ -1,10 +1,5 @@
 // Tutorial from: https://realpython.com/blog/python/django-and-ajax-form-submissions/
 $(document).ready(function(){
-    $('#post-form').on('submit', function(event){
-        event.preventDefault();
-        console.log('form submitted!')
-        create_post();
-    });
 
     $('#question-form').on('submit', function(event){
         event.preventDefault();
@@ -12,15 +7,16 @@ $(document).ready(function(){
         create_question();
     });
 
-    function create_post(){
+    function create_question(){
         console.log("You've successfully created a post!")
+        console.log($('#question-text').val())
         $.ajax({
-            url : "create_post/",
+            url : "create_question/",
             type : "POST",
-            data : { a_post : $('#post-text').val() },
+            data : { a_post : $('#question-text').val() },
 
             success : function(json) {
-                $('#post-text').val('');
+                $('#question-text').val('');
                 console.log(json);
                 console.log("SUCCESS!");
 

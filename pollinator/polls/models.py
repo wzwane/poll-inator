@@ -5,7 +5,7 @@ from django.forms import ModelForm
 
 class Question(models.Model):
 	question_text = models.CharField(max_length=200, unique=True)
-	pub_date = models.DateTimeField('date published')
+	num_votes = models.IntegerField(default=0)
 
 	def __str__(self):
 		return self.question_text
@@ -17,13 +17,3 @@ class Choice(models.Model):
 
 	def __str__(self):
 		return self.choice_text
-
-class QuestionForm(ModelForm):
-	class Meta:
-		model = Question
-		fields = ['question_text', 'pub_date']
-
-class ChoiceForm(ModelForm):
-	class Meta:
-		model = Choice
-		fields = ['question', 'choice_text', 'votes']

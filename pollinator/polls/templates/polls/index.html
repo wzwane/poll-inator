@@ -18,6 +18,8 @@
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
+<title>Poll-inator</title>
+
 
 <div>
 	<nav class="navbar navbar-inverse header-nav">
@@ -29,15 +31,25 @@
 			</div>
 		</div>
 	</nav>
-<form method='POST' action=''>{% csrf_token %}
-<h4>Post a new question below:</h4>
-{{ form.as_p }}
-<button type='submit'>Create Question</button>
+<!-- <form method="POST" id="question-form">
+	{% csrf_token %}
+	<h4>Post a new question below:</h4>
+	{{ form.as_p }}
+	<input type="submit" value="Create Question">
+</form> -->
+
+<form method="POST" id="question-form">
+    {% csrf_token %}
+    <div class="fieldWrapper" id="the_question">
+        {{ form.as_p }}
+    </div>
+    <div id="results"></div> <!-- errors go here -->
+    <input type="submit" value="Post" class="tiny button">
 </form>
 
 <h1>List of Questions</h1>
 {% if question_list %}
-	<ul>
+	<ul id="questions">
 	{% for question in question_list %}
 		<li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
 	{% endfor %}

@@ -7,7 +7,7 @@ class QuestionForm(forms.ModelForm):
 		fields = ['question_text']
 		widgets = {
 			'question_text': forms.TextInput(
-				attrs={'id': 'question-text', 
+				attrs={'id': 'question-text',
 					'required': True,
 					'placeholder': 'Ask a question',
 					}

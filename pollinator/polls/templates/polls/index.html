@@ -29,30 +29,11 @@
 			</div>
 		</div>
 	</nav>
-
-	<form action="/create_question/" method="POST" id="question-form">
-		<div class="container">
-			<div class="content col-sm-offset-3">
-				<div class="questions">
-					<div class="questionForm question">
-						<h4>Post a new question below:</h4>
-						<div class="col-lg-8">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Question" id = "question">
-								<span>
-								<p></p>
-
-								<button class="btn btn-default" type="submit" id = "askButton">Post Question</button>
-
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
-</div>
+<form method='POST' action=''>{% csrf_token %}
+<h4>Post a new question below:</h4>
+{{ form.as_p }}
+<button type='submit'>Create Question</button>
+</form>
 
 <h1>List of Questions</h1>
 {% if question_list %}

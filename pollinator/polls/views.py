@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.template import loader
+from django.template import loader, RequestContext
 
 from .models import Question, Choice
 from .forms import QuestionForm
@@ -20,7 +20,15 @@ def index(request):
 """ index() using render() method"""
 def index(request):
 	question_list = Question.objects.all()
-	context = {'question_list': question_list}
+	form = QuestionForm(request.POST or None)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		print form.cleaned_data.get("question_text")
+		instance.save()
+	context = {
+		'question_list': question_list,
+		'form': form,
+	}
 	return render(request, 'polls/index.html', context)
 
 

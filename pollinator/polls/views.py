@@ -6,18 +6,7 @@ from .models import Question, Choice
 from .forms import QuestionForm
 from django.urls import reverse
 
-"""the original index method"""
-"""
-def index(request):
-	question_list = Question.objects.all()
-	template = loader.get_template('polls/index.html')
-	context = {
-		'question_list': question_list,
-	}
-	return HttpResponse(template.render(context, request))
-"""
-
-""" index() using render() method"""
+"""Renders the main page (index.html)"""
 def index(request):
 	question_list = Question.objects.all()
 	form = QuestionForm(request.POST or None)
@@ -31,18 +20,7 @@ def index(request):
 	}
 	return render(request, 'polls/index.html', context)
 
-
-"""Original detail() method"""
-"""
-def detail(request, question_id):
-	try:
-		question = Question.objects.get(pk=question_id)
-	except Question.DoesNotExist:
-		raise Http404("Question does not exist")
-	return render(request, 'polls/detail.html', {'question': question})
-"""
-
-"""Making use of get_object_or_404() method"""
+"""Renders the question page (detail.html)"""
 def detail(request, question_id):
 	question = get_object_or_404(Question, pk=question_id)
 	return render(request, 'polls/detail.html', {'question': question})
@@ -96,20 +74,3 @@ def create_question1(request):
 			json.dumps({"nothing to see": "this isn't happening"}),
 			content_type="application/jsons"
 		)
-
-def question_create(request):
-	form = QuestionForm(request.POST or None)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		print form.cleaned_data.get("question_text")
-		instance.save()
-
-	# if request.method == "POST":
-	# 	print request.POST
-	# 	print request.POST.get("question_text")
-	# 	question_text = request.POST.get("question_text")
-	# 	Post.objects.create(question_text=question_text)
-	context = {
-		"form": form,
-	}
-	return render(request, "polls/question_form.html", context)

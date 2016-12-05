@@ -3,16 +3,16 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader, RequestContext
 
 from .models import Question, Choice
-from .forms import QuestionForm
+from .forms import QuestionForm, ChoiceForm
 from django.urls import reverse
 
 """Renders the main page (index.html)"""
 def index(request):
-	question_list = Question.objects.all()
-	form = QuestionForm(request.POST or None)
-	if form.is_valid():
+	question_list = Question.objects.all()  # fetch the list of questions from DB
+	form = QuestionForm(request.POST or None)  # get input from the form
+	if form.is_valid():  # if fields are validated
 		instance = form.save(commit=False)
-		print form.cleaned_data.get("question_text")
+		print form.cleaned_data.get("question_text") # print field to check
 		instance.save()
 	context = {
 		'question_list': question_list,
@@ -23,7 +23,34 @@ def index(request):
 """Renders the question page (detail.html)"""
 def detail(request, question_id):
 	question = get_object_or_404(Question, pk=question_id)
-	return render(request, 'polls/detail.html', {'question': question})
+	form = ChoiceForm(request.POST or None)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		print form.cleaned_data.get("choice_text")
+		instance.save()
+	context = {
+		'question': question,
+		'form': form,
+	}
+	return render(request, 'polls/detail.html', context)
+
+def question_update(request, id=None):
+	instance = get_object_or_404(Question, id=id)
+	form = QuestionForm(request.POST or None, instance=instance)  # get input from the form
+	if form.is_valid():  # if fields are validated
+		instance = form.save(commit=False)
+		instance.save()
+		return HttpResponseRedirect(instance.get_absolute_url())
+	context = {
+		'question_text': instance.question_text,
+		'instance': instance,
+		'form': form,
+	}
+	return render(request, "question_form.html", context)
+
+
+
+
 
 
 def results(request, question_id):

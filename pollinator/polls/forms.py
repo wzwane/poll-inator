@@ -18,3 +18,11 @@ class ChoiceForm(forms.ModelForm):
 	class Meta:
 		model = Choice
 		fields = ['choice_text']
+		widgets = {
+			'choice_text': forms.TextInput(
+				attrs={'id': 'choice-text',
+					'required': True,
+					'placeholder': 'Add a choice',
+				}
+			),
+		}

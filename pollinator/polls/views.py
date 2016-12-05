@@ -6,6 +6,8 @@ from .models import Question, Choice
 from .forms import QuestionForm, ChoiceForm
 from django.urls import reverse
 
+import json
+
 """Renders the main page (index.html)"""
 def index(request):
 	question_list = Question.objects.all()  # fetch the list of questions from DB

@@ -7,11 +7,12 @@ $(document).ready(function(){
         create_question();
     });
 
+    // AJAX for posting
     function create_question(){
         console.log("You've successfully created a question!") // sanity check
         console.log($('#question-text').val())
         $.ajax({
-            url : "create_question", // the endpoint
+            url : "create_question/", // the endpoint
             type : "POST", // http method
             data : { the_question : $('#question-text').val() }, // data sent with the post request
 
@@ -28,7 +29,7 @@ $(document).ready(function(){
                 console.log(xhr.status + ": " + xhr.responseText);
             }
         });
-    }
+    };
 
     // var questionsList = [];
     // var questionId = 0;

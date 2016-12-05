@@ -9,14 +9,14 @@ $(document).ready(function(){
 
     function create_question(){
         console.log("You've successfully created a post!")
-        console.log($('#question-text').val())
+        console.log($('#question').val())
         $.ajax({
-            url : "create_question/",
+            url : ".",
             type : "POST",
-            data : { a_post : $('#question-text').val() },
+            data : { a_post : $('#question').val() },
 
             success : function(json) {
-                $('#question-text').val('');
+                $('#question').val('');
                 console.log(json);
                 console.log("SUCCESS!");
 

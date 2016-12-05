@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
+
 from .models import Question, Choice
 from .forms import QuestionForm
 from django.urls import reverse
 
+"""the original index method"""
+"""
 def index(request):
 	question_list = Question.objects.all()
 	template = loader.get_template('polls/index.html')
@@ -12,15 +15,14 @@ def index(request):
 		'question_list': question_list,
 	}
 	return HttpResponse(template.render(context, request))
-
+"""
 
 """ index() using render() method"""
-"""
 def index(request):
 	question_list = Question.objects.all()
 	context = {'question_list': question_list}
 	return render(request, 'polls/index.html', context)
-"""
+
 
 """Original detail() method"""
 """
@@ -65,7 +67,7 @@ def get_question(request):
 			form = QuestionForm()
 		return render(request, 'main.html', {'form': form})
 
-def create_question(request):
+def create_question1(request):
 	if request.method == 'POST':
 		question_text = request.POST.get("the_question")
 		response_data = {}
@@ -86,3 +88,20 @@ def create_question(request):
 			json.dumps({"nothing to see": "this isn't happening"}),
 			content_type="application/jsons"
 		)
+
+def question_create(request):
+	form = QuestionForm(request.POST or None)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		print form.cleaned_data.get("question_text")
+		instance.save()
+
+	# if request.method == "POST":
+	# 	print request.POST
+	# 	print request.POST.get("question_text")
+	# 	question_text = request.POST.get("question_text")
+	# 	Post.objects.create(question_text=question_text)
+	context = {
+		"form": form,
+	}
+	return render(request, "polls/question_form.html", context)

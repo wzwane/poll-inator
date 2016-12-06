@@ -92,7 +92,7 @@ def create_question(request):
 
 		return HttpResponse(
 			json.dumps(response_data),
-			contet_type="application/json"
+			content_type="application/json"
 		)
 	else:
 		return HttpResponse(

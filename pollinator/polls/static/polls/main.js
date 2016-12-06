@@ -19,7 +19,7 @@ $(document).ready(function(){
             success : function(json) {
                 $('#question-text').val(''); // remove the value from the input
                 console.log(json); // log the returned json to the console
-                $("#questions").append("<li>"+json.question_text+"</li>"); //
+                $("#questions").append("<li><a href='/polls/"+json.questionpk+"/'>"+json.question_text+"</a></li>"); //
                 console.log("SUCCESS!"); // sanity check
             },
 

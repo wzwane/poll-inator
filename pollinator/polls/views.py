@@ -21,35 +21,12 @@ def index(request):
 """Renders the question page (detail.html)"""
 def detail(request, question_id):
 	question = get_object_or_404(Question, pk=question_id)
-	form = ChoiceForm(request.POST or None)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		print form.cleaned_data.get("choice_text")
-		instance.save()
+	form = ChoiceForm();
 	context = {
 		'question': question,
 		'form': form,
 	}
 	return render(request, 'polls/detail.html', context)
-
-# def question_update(request, id=None):
-# 	instance = get_object_or_404(Question, id=id)
-# 	form = QuestionForm(request.POST or None, instance=instance)  # get input from the form
-# 	if form.is_valid():  # if fields are validated
-# 		instance = form.save(commit=False)
-# 		instance.save()
-# 		return HttpResponseRedirect(instance.get_absolute_url())
-# 	context = {
-# 		'question_text': instance.question_text,
-# 		'instance': instance,
-# 		'form': form,
-# 	}
-# 	return render(request, "question_form.html", context)
-
-
-
-
-
 
 def results(request, question_id):
 	response = "You're looking at the results of question %s."
@@ -69,15 +46,7 @@ def vote(request, question_id):
 		selected_choice.save()
 		return HttpResponseRedirect(reverse('results', args=(question.id,)))
 
-# def get_question(request):
-# 	if request.method == 'POST':
-# 		form = QuestionForm(request.POST)
-# 		if form.is_valid():
-# 			return HttpResponseRedirect('/main/')
-# 		else:
-# 			form = QuestionForm()
-# 		return render(request, 'main.html', {'form': form})
-
+"""Creates a question and updates the database"""
 def create_question(request):
 	if request.method == 'POST':
 		question_text = request.POST.get("the_question")
@@ -99,3 +68,25 @@ def create_question(request):
 			json.dumps({"nothing to see": "this isn't happening"}),
 			content_type="application/jsons"
 		)
+
+# def create_choice(request):
+# 	if request.method == 'POST':
+# 		question_text = request.POST.get("the_choice")
+# 		response_data = {}
+
+# 		question = Question(question_text=question_text)
+# 		question.save()
+
+# 		response_data['result'] = 'Create choice successful'
+# 		response_data['questionpk'] = question.pk
+# 		response_data['question_text'] = question.question_text
+
+# 		return HttpResponse(
+# 			json.dumps(response_data),
+# 			content_type="application/json"
+# 		)
+# 	else:
+# 		return HttpResponse(
+# 			json.dumps({"nothing to see": "this isn't happening"}),
+# 			content_type="application/jsons"
+# 		)

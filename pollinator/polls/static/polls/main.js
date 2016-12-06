@@ -31,37 +31,36 @@ $(document).ready(function(){
         });
     };
 
-    // var questionsList = [];
-    // var questionId = 0;
-    // var newQuestionTitle = document.getElementById("questionTitle");
-    // var newQuestionDescription = document.getElementById("questionDescription");
+    $('#choice-form').on('submit', function(event){
+        event.preventDefault();
+        console.log("Choice submitted!")  // sanity check
+        create_choice();
+    });
+
+    // function create_choice(){
+    //     console.log("Choice created!") // sanity check
+    //     console.log($('#choice-text').val())
+    //     $.ajax({
+    //         url : "create_choice/", // the endpoint
+    //         type : "POST", // http method
+    //         data : { the_choice : $('#choice-text').val() }, // data sent with the post request
+
+    //         success : function(json) {
+    //             $('#choice-text').val(''); // remove the value from the input
+    //             console.log(json); // log the returned json to the console
+    //             $("#choices").append("new choice"); //
+    //             console.log("SUCCESS!"); // sanity check
+    //         },
+
+    //         error : function(xhr,errmsg,err) {
+    //             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Error: "+errmsg+
+    //                 " <a href='#' class='close'>&times;</a></div>");
+    //             console.log(xhr.status + ": " + xhr.responseText);
+    //         }
+    //     });
+    // };
 
 
-    // function insertQ () {
-    //     displayQ();
-    //     clearQ();
-    // }
-
-    // function displayQ(){
-    //     questionId += 1;
-    //     console.log(questionId)
-    //     questionsList.push({id: questionId, title: newQuestionTitle.value, des:newQuestionDescription.value })
-    //     $(".questions").append($('<div class="question shadowedBox">')
-    //     .append($('<div class="questionInfo">')
-    //         .append($('<h3 class="questionTitle">')
-    //         .append($("<p>").append(newQuestionTitle.value)))
-    //         .append($('<p class="questionContent">').append($("<p>").append(newQuestionDescription.value))))
-    //         .append($('<div class="options"><button class="btn btn-primary upvote">^</button><button class="btn btn-primary downvote">V</button><button class="btn btn-primary comment">Comment</button>')
-
-    //         ));
-    //     console.log(questionsList)
-    // }
-
-
-    // function clearQ(){
-    //     newQuestionTitle.value = "";
-    //     newQuestionDescription.value = "";
-    // }
 
     // This function gets cookie with a given name
     function getCookie(name) {

@@ -1,34 +1,28 @@
+{% load static %}
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+<!-- Javascript -->
+<script src="{% static 'polls/main.js' %}" type="text/javascript"></script>
+
 <h1>{{ question.question_text }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 
 <!-- List of choices of the question -->
+<div id="choices">
 {% for choice in question.choice_set.all %}
 	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
 	<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
 {% endfor %}
+</div>
 
 <!-- Form for creating a new choice -->
-<form action="" method="POST">
-{% csrf_token %}
-<h4>Create a new choice below:</h4>
-{{ form.as_p }}
-<button type="submit">Create Choice</button>
-</form>
-
-
-
-
-
-
-
-
-<form action="{% url 'vote' question.id %}" method="post">
-{% csrf_token %}
-{% for choice in question.choice_set.all %}
-	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
-	<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-{% endfor %}
-<input type="submit" value="Vote" />
+<form method="POST" id="choice-form">
+	{% csrf_token %}
+	<h4>Create a new choice below:</h4>
+	{{ form.as_p }}
+	<input type="submit" value="Create Choice">
 </form>

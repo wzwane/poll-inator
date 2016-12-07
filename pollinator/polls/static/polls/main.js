@@ -19,7 +19,7 @@ $(document).ready(function(){
             success : function(json) {
                 $('#question-text').val(''); // remove the value from the input
                 console.log(json); // log the returned json to the console
-                $("#questions").append("<li><a href='/polls/"+json.questionpk+"/'>"+json.question_text+"</a></li>"); //
+                $("#questions").append("<li><a href='/polls/"+json.questionpk+"/'>"+json.question_text+"</a></li>");
                 console.log("SUCCESS!"); // sanity check
             },
 
@@ -29,7 +29,7 @@ $(document).ready(function(){
                 console.log(xhr.status + ": " + xhr.responseText);
             }
         });
-    };
+    }
 
     $('#choice-form').on('submit', function(event){
         event.preventDefault();
@@ -37,28 +37,29 @@ $(document).ready(function(){
         create_choice();
     });
 
-    // function create_choice(){
-    //     console.log("Choice created!") // sanity check
-    //     console.log($('#choice-text').val())
-    //     $.ajax({
-    //         url : "create_choice/", // the endpoint
-    //         type : "POST", // http method
-    //         data : { the_choice : $('#choice-text').val() }, // data sent with the post request
+    function create_choice(){
+        console.log("Choice created!") // sanity check
+        console.log($('#choice-text').val())
+        console.log($('#question-id').val())
+        $.ajax({
+            url : "create_choice/", // the endpoint
+            type : "POST", // http method
+            data : { the_choice : $('#choice-text').val() }, // data sent with the post request
 
-    //         success : function(json) {
-    //             $('#choice-text').val(''); // remove the value from the input
-    //             console.log(json); // log the returned json to the console
-    //             $("#choices").append("new choice"); //
-    //             console.log("SUCCESS!"); // sanity check
-    //         },
+            success : function(json) {
+                $('#choice-text').val(''); // remove the value from the input
+                console.log(json); // log the returned json to the console
+                $("#choices").append("<input type='radio' id='"+json.choice_text+"'/><label for='"+json.choice_text+"'>"+json.choice_text+"</label><br>");
+                console.log("SUCCESS!"); // sanity check
+            },
 
-    //         error : function(xhr,errmsg,err) {
-    //             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Error: "+errmsg+
-    //                 " <a href='#' class='close'>&times;</a></div>");
-    //             console.log(xhr.status + ": " + xhr.responseText);
-    //         }
-    //     });
-    // };
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>");
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    }
 
 
 

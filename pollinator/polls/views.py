@@ -28,23 +28,23 @@ def detail(request, question_id):
 	}
 	return render(request, 'polls/detail.html', context)
 
-def results(request, question_id):
-	response = "You're looking at the results of question %s."
-	return HttpResponse(response % question_id)
+# def results(request, question_id):
+# 	response = "You're looking at the results of question %s."
+# 	return HttpResponse(response % question_id)
 
-def vote(request, question_id):
-	question = get_object_or_404(Question, pk=question_id)
-	try:
-		selected_choice = question.choice_set.get(pk=request.POST['choice'])
-	except (KeyError, Choice.DoesNotExist):
-		return render(request, 'polls/detail.html', {
-			'question': question,
-			'error_message': "You didn't select a choice.",
-			})
-	else:
-		selected_choice.votes += 1
-		selected_choice.save()
-		return HttpResponseRedirect(reverse('results', args=(question.id,)))
+# def vote(request, question_id):
+# 	question = get_object_or_404(Question, pk=question_id)
+# 	try:
+# 		selected_choice = question.choice_set.get(pk=request.POST['choice'])
+# 	except (KeyError, Choice.DoesNotExist):
+# 		return render(request, 'polls/detail.html', {
+# 			'question': question,
+# 			'error_message': "You didn't select a choice.",
+# 			})
+# 	else:
+# 		selected_choice.votes += 1
+# 		selected_choice.save()
+# 		return HttpResponseRedirect(reverse('results', args=(question.id,)))
 
 """Creates a question and updates the database"""
 def create_question(request):
@@ -69,24 +69,27 @@ def create_question(request):
 			content_type="application/jsons"
 		)
 
-# def create_choice(request):
-# 	if request.method == 'POST':
-# 		question_text = request.POST.get("the_choice")
-# 		response_data = {}
+def create_choice(request, question_id):
+	if request.method == 'POST':
+		choice_text = request.POST.get("the_choice")
+		response_data = {}
 
-# 		question = Question(question_text=question_text)
-# 		question.save()
+		question = Question.objects.get(pk=question_id)
+		"""Below will be uncommented later to actually save the choice in DB"""
+		# question.choice_set.create(choice_text=choice_text)
 
-# 		response_data['result'] = 'Create choice successful'
-# 		response_data['questionpk'] = question.pk
-# 		response_data['question_text'] = question.question_text
+		response_data['result'] = 'Create choice successful'
+		response_data['questionpk'] = question.pk
+		response_data['question_text'] = question.question_text
+		# response_data['choice_text'] = #need to fetch choice id(?) from DB
+		response_data['choice_text'] = choice_text
 
-# 		return HttpResponse(
-# 			json.dumps(response_data),
-# 			content_type="application/json"
-# 		)
-# 	else:
-# 		return HttpResponse(
-# 			json.dumps({"nothing to see": "this isn't happening"}),
-# 			content_type="application/jsons"
-# 		)
+		return HttpResponse(
+			json.dumps(response_data),
+			content_type="application/json"
+		)
+	else:
+		return HttpResponse(
+			json.dumps({"nothing to see": "this isn't happening"}),
+			content_type="application/jsons"
+		)

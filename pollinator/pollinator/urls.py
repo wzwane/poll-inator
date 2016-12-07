@@ -6,8 +6,8 @@ urlpatterns = [
 	url(r'^polls/$', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^polls/create_question/$', views.create_question),
-    # url(r'^polls/create_choice/$', views.create_choice),
+    url(r'^polls/(?P<question_id>[0-9]+)/create_choice/$', views.create_choice),
     url(r'^polls/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
-    url(r'^polls/(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
-    url(r'^polls/(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
+    # url(r'^polls/(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
+    # url(r'^polls/(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
 ]

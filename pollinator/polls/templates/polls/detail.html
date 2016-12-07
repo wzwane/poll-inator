@@ -24,5 +24,6 @@
 	{% csrf_token %}
 	<h4>Create a new choice below:</h4>
 	{{ form.as_p }}
+	<div id="results"></div> <!-- errors go here -->
 	<input type="submit" value="Create Choice">
 </form>

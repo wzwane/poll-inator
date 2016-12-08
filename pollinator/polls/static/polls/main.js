@@ -49,7 +49,9 @@ $(document).ready(function(){
             success : function(json) {
                 $('#choice-text').val(''); // remove the value from the input
                 console.log(json); // log the returned json to the console
-                $("#choices").append("<input type='radio' id='"+json.choice_text+"'/><label for='"+json.choice_text+"'>"+json.choice_text+"</label><br>");
+                $("#choices").append("<input type='radio' id='"+json.choice_text+"'/> <label for='"
+                    +json.choice_text+"'>"+json.choice_text+"</label> ("
+                    +json.choice_votes+")<br>");
                 console.log("SUCCESS!"); // sanity check
             },
 

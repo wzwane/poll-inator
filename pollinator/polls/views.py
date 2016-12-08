@@ -76,12 +76,13 @@ def create_choice(request, question_id):
 
 		question = Question.objects.get(pk=question_id)
 		"""Below will be uncommented later to actually save the choice in DB"""
-		# question.choice_set.create(choice_text=choice_text)
+		choice = question.choice_set.create(choice_text=choice_text)
 
 		response_data['result'] = 'Create choice successful'
 		response_data['questionpk'] = question.pk
 		response_data['question_text'] = question.question_text
-		# response_data['choice_text'] = #need to fetch choice id(?) from DB
+		response_data['choicepk'] = choice.pk
+		response_data['choice_votes'] = choice.votes
 		response_data['choice_text'] = choice_text
 
 		return HttpResponse(

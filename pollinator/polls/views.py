@@ -32,20 +32,6 @@ def detail(request, question_id):
 # 	response = "You're looking at the results of question %s."
 # 	return HttpResponse(response % question_id)
 
-# def vote(request, question_id):
-# 	question = get_object_or_404(Question, pk=question_id)
-# 	try:
-# 		selected_choice = question.choice_set.get(pk=request.POST['choice'])
-# 	except (KeyError, Choice.DoesNotExist):
-# 		return render(request, 'polls/detail.html', {
-# 			'question': question,
-# 			'error_message': "You didn't select a choice.",
-# 			})
-# 	else:
-# 		selected_choice.votes += 1
-# 		selected_choice.save()
-# 		return HttpResponseRedirect(reverse('results', args=(question.id,)))
-
 """Creates a question and updates the database"""
 def create_question(request):
 	if request.method == 'POST':
@@ -69,6 +55,7 @@ def create_question(request):
 			content_type="application/jsons"
 		)
 
+"""Creates a choice and updates the database"""
 def create_choice(request, question_id):
 	if request.method == 'POST':
 		choice_text = request.POST.get("the_choice")
@@ -93,4 +80,25 @@ def create_choice(request, question_id):
 		return HttpResponse(
 			json.dumps({"nothing to see": "this isn't happening"}),
 			content_type="application/jsons"
+		)
+
+"""Updates the votes field of a choice instance"""
+def vote(request, question_id):
+	question = get_object_or_404(Question, pk=question_id)
+	try:
+		selected_choice = question.choice_set.get(pk=request.POST['the_selected'])
+	except (KeyError, Choice.DoesNotExist):
+		return render(request, 'polls/detail.html', {
+			'question': question,
+			'error_message': "You didn't select a choice.",
+			})
+	else:
+		selected_choice.votes += 1
+		selected_choice.save()
+		response_data = {}
+		response_data['choicepk'] = selected_choice.pk
+		response_data['choice_votes'] = selected_choice.votes
+		return HttpResponse(
+			json.dumps(response_data),
+			content_type="application/json"
 		)

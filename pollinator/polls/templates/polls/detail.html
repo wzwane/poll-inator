@@ -12,13 +12,17 @@
 
 
 <!-- List of choices of the question -->
-<div id="choices">
-{% for choice in question.choice_set.all %}
-	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
-	<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
-	({{ choice.votes }})<br />
-{% endfor %}
-</div>
+<form method="POST" id="vote-form">
+	<div id="choices">
+	{% for choice in question.choice_set.all %}
+		<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+		<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+	(<div style="display: inline-block" id="Choice{{ choice.id }}Votes">{{ choice.votes }}</div>)<br />
+	{% endfor %}
+	</div>
+	<br/>
+	<input type="submit" value="Vote">
+</form>
 
 <!-- Form for creating a new choice -->
 <form method="POST" id="choice-form">

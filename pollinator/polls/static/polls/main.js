@@ -40,7 +40,6 @@ $(document).ready(function(){
     function create_choice(){
         console.log("Choice created!") // sanity check
         console.log($('#choice-text').val())
-        console.log($('#question-id').val())
         $.ajax({
             url : "create_choice/", // the endpoint
             type : "POST", // http method
@@ -51,7 +50,43 @@ $(document).ready(function(){
                 console.log(json); // log the returned json to the console
                 $("#choices").append("<input type='radio' id='"+json.choice_text+"'/> <label for='"
                     +json.choice_text+"'>"+json.choice_text+"</label> ("
-                    +json.choice_votes+")<br>");
+                    +json.choice_votes+")<br />");
+                console.log("SUCCESS!"); // sanity check
+            },
+
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! Error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>");
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    }
+
+    $('#vote-form').on('submit', function(event){
+        event.preventDefault();
+        console.log("Vote submitted!");  // sanity check
+        vote();
+    });
+
+    function vote(){
+        console.log("vote() called") // sanity check
+        var choice = $("input[name=choice]:checked")
+        var choicepk = choice.val();
+        console.log(choicepk);
+        // choice.removeAttr('checked');
+        $.ajax({
+            url : "vote/", // the endpoint
+            type : "POST", // http method
+            data : { the_selected : choicepk }, // data sent with the post request
+
+            success : function(json) {
+                console.log(json); // log the returned json to the console
+                alert("You voted successfully!");
+                // $("#choices").append("<input type='radio' id='"+json.choice_text+"'/> <label for='"
+                //     +json.choice_text+"'>"+json.choice_text+"</label> ("
+                //     +json.choice_votes+")<br />");
+                $('#Choice'+json.choicepk+'Votes').html(json.choice_votes);
+                choice.prop('checked', false);
                 console.log("SUCCESS!"); // sanity check
             },
 
@@ -64,6 +99,9 @@ $(document).ready(function(){
     }
 
 
+// Code below is from 
+// https://github.com/realpython/django-form-fun/blob/master/part1/main.js
+// It enables AJAX to pass the csrf_token
 
     // This function gets cookie with a given name
     function getCookie(name) {
